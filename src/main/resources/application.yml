@@ -8,14 +8,14 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/echo_verse_db?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
-    password: hby83889237 # 推荐使用环境变量
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   # Redis 配置
   data:
     redis:
       host: localhost
       port: 6379
-      password: hby83889237 # 推荐使用环境变量
+      password: ${REDIS_PASSWORD}
   sql:
     init:
       mode: always # 每次启动都检查并执行 data.sql
@@ -33,34 +33,31 @@ mybatis-plus:
 # LangChain4j & 大模型配置
 langchain4j:
   open-ai:
-    # 快速模型 (用于分析) - 这是 starter 自动创建的阻塞模型
     chat-model:
-      base-url: https://api.siliconflow.cn/v1/ # 替换为您的模型服务地址
-      api-key: sk-zceyjwaqoezknruztliomhgwhrbsvjvxzermhntczfyyqieq # 从环境变量获取
-      model-name: Qwen/QwQ-32B # 替换为您的快速模型
+      base-url: https://api.siliconflow.cn/v1/ 
+      api-key: ${SILICONFLOW_CHAT_API_KEY}
+      model-name: Qwen/QwQ-32B
       temperature: 0.0
       log-requests: true
       log-responses: true
-    # 流式模型 (用于最终输出) - 这是 starter 自动创建的流式模型
     streaming-chat-model:
-      base-url: https://api.siliconflow.cn/v1/ # 替换为您的模型服务地址
-      api-key: sk-ahosmmzssctndacmyaazdezpmfbxtnclxgpebqgvhhyyojte # 从环境变量获取
-      model-name: Pro/deepseek-ai/DeepSeek-R1 # 替换为您的强大流式模型
+      base-url: https://api.siliconflow.cn/v1/
+      api-key: ${SILICONFLOW_STREAMING_API_KEY}
+      model-name: Pro/deepseek-ai/DeepSeek-R1 
       temperature: 0.0
       log-requests: true
       log-responses: true
 
 # MiniMax TTS 配置
 minimax:
-  api-key: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJHcm91cE5hbWUiOiLmtbfonrrnlKjmiLdfNDI3MTMyMjQzMjQzOTUwMDg5IiwiVXNlck5hbWUiOiLmtbfonrrnlKjmiLdfNDI3MTMyMjQzMjQzOTUwMDg5IiwiQWNjb3VudCI6IiIsIlN1YmplY3RJRCI6IjE5NzAzMDE4NDk3OTM3MzMxNzQiLCJQaG9uZSI6IjE4OTUyMTU5OTgxIiwiR3JvdXBJRCI6IjE5NzAzMDE4NDk3ODUzNDQ1NjYiLCJQYWdlTmFtZSI6IiIsIk1haWwiOiIiLCJDcmVhdGVUaW1lIjoiMjAyNS0wOS0yNCAxNjo0MjoyMiIsIlRva2VuVHlwZSI6MSwiaXNzIjoibWluaW1heCJ9.nPVhHUG97LGysgAxwSPaWytVJsuhP2N7lPlhkwtJR4potxso2w1FPAbyDCk_e5smgW-QWX_XnQbncVWUYzRZh1nkQbyxTm_JghcCNhWWTmbTHrSqFtzXpk5qEfs7hHAXfyUWxWev5IpUyfrp-E0SwdO22mDpZa8iZyuj5UqQWKQq9hS4awRcpxXFx_V4zUWIOXjfv4ATC15ngSVVXH9--p5Cg4nynSevu8hFIovGREJJEYqLDpNJNCwgR7y7cgXywvrj68tJcV_x_1n6LP01I1n9oRFV7GtqX7ttY3NkALQKcXfkdCCmtSvGtGBCLr90c539d0-jQlQq9ZNs7kqoew
+  api-key: ${MINIMAX_API_KEY}
   group-id: 1970301849785344566
-  # 注意：URL中不包含GroupId，我们将在代码中拼接
   tts-url: https://api.minimaxi.com/v1/t2a_v2
 
 # JWT 安全配置
 app:
   jwt:
-    secret: "TjNmWjZzOWJkR2x1YVdOclNXNXpZWEp1WlhJdGRXMXpJRzl5WjJsdVlXd3hNVEF4TUE9PQ=="
+    secret: ${APP_JWT_SECRET}
     expiration-ms: 604800000 # 7天免登录 (7 * 24 * 60 * 60 * 1000)
 
 # SpringDoc API 文档配置
